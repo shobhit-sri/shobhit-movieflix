@@ -10,5 +10,7 @@
 **/.metadata
 **/Servers
 **/RemoteSystemsTempFiles
-
+**/.recommenders
 **/target/*
+*.classpath
+*.project
