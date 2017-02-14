@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Details</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="../js/main.js"></script>
+</head>
+<script>
+    $(function(){
+        $("#header").load("header.html");
+        $("#footer").load("footer.html");
+        $("#btnEditMovie").click(function(){
+            var movDetEle = document.querySelectorAll("[contenteditable=false]");
+            for(var i=0; i<movDetEle.length; i++) {
+                movDetEle[i].setAttribute("contentEditable", true);
+                movDetEle[i].className = "spanMovDetEdit";
+            }
+            $("#btnUpdate").addClass("show").removeClass("hide");
+            $("#btnCancelEdit").addClass("show").removeClass("hide");
+            $("#btnEditMovie").addClass("hide").removeClass("show");
+        });
+        $("#btnCancelEdit").click(function(){
+            var movDetEle = document.querySelectorAll("[contenteditable=true]");
+            for(var i=0; i<movDetEle.length; i++) {
+                movDetEle[i].setAttribute("contentEditable", false);
+                movDetEle[i].className = "spanMovDet";
+            }
+            $("#btnUpdate").addClass("hide").removeClass("show");
+            $("#btnCancelEdit").addClass("hide").removeClass("show");
+            $("#btnEditMovie").addClass("show").removeClass("hide");
+        });
+    });
+</script>
+<body>
+<div id="header"></div><br><br>
+<h1 class="col-md-12 well">Movie Details</h1>
+<div class="form-group"><hr></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2"><img src="http://ia.media-imdb.com/images/M/MV5BMTU4MDU3NDQ5Ml5BMl5BanBnXkFtZTgwOTU5MDUxNTE@._V1_SX300.jpg"  width="150" height="150" alt="Avengers" class="img-thumbnail"></div>
+        <div class="col-md-6">
+            <div class="row">
+                <form action="">
+                    <div><h3>Avengers: Age of Ultron</h3></div>
+                    <div class="text-justify"><span class="spanMovDet" contenteditable=false>When Tony Stark and Bruce Banner try to jump-start a dormant peacekeeping program called Ultron, things go horribly wrong and it's up to Earth's Mightiest Heroes to stop the villainous Ultron from enacting his terrible plans.</span></div>
+                    <div><strong class="lblMovDet">Actors: </strong><span class="spanMovDet" contenteditable=false>Robert Downey Jr., Chris Hemsworth, Mark Ruffalo, Chris Evans</span></div>
+                    <div><strong class="lblMovDet">Director: </strong><span class="spanMovDet" contenteditable=false>Joss Whedon</span></div>
+                    <div><strong class="lblMovDet">Writer: </strong><span class="spanMovDet" contenteditable=false>Joss Whedon, Stan Lee (Marvel comics), Jack Kirby (Marvel comics)</span></div>
+                    <div><strong class="lblMovDet">Released: </strong><span class="spanMovDet" contenteditable=false>2015-05-01</span></div>
+                    <div><strong class="lblMovDet">Rated: </strong><span class="spanMovDet" contenteditable=false>PG-13</span></div>
+                    <div><strong class="lblMovDet">Genre: </strong><span class="spanMovDet" contenteditable=false>Action, Adventure, Sci-Fi</span></div>
+                    <div><strong class="lblMovDet">Language: </strong><span class="spanMovDet" contenteditable=false>English</span></div>
+                    <div><strong class="lblMovDet">Country: </strong><span class="spanMovDet" contenteditable=false>USA</span></div>
+                    <div><strong class="lblMovDet">Imdb Rating: </strong><span class="spanMovDet" contenteditable=false>7.6</span></div>
+                    <div><strong class="lblMovDet">User Rating: </strong><span class="spanMovDet" contenteditable=false>3</span></div>
+                    <div><strong class="lblMovDet">Imdb Votes: </strong><span class="spanMovDet" contenteditable=false>370909</span></div>
+                    <div><strong class="lblMovDet">MetaScore: </strong><span class="spanMovDet" contenteditable=false>66</span></div>
+                    <div><strong class="lblMovDet">Type: </strong><span class="spanMovDet" contenteditable=false>Movie</span></div>
+                    <div><strong class="lblMovDet">Runtime: </strong><span class="spanMovDet" contenteditable=false>141 min</span></div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-default" id="btnEditMovie">Edit</button>
+                            <button type="button" class="btn btn-warning hide" id="btnCancelEdit">Cancel</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary col-md-offset-2 hide" id="btnUpdate">Update</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <hr>
+        <div class="col-md-2"></div>
+        <div class="col-md-6">
+            <div class="row">
+                <div><p><strong>User Reviews</strong></p></div>
+                <div class="col-md-12"><strong>By Username</strong></div>
+                <div class="col-md-12 text-justify">
+                    <p>This movie takes a long time to gain any steam, with a lot of all talk and no action in the first half of the movie. There is also little suspense and intrigue - just the superheroes pondering and conjuring their next mission, with Tony Stark and Bruce Banner creating a project called Ultron to act as a peacekeeping program serving as the movie's backdrop.</p>
+                </div>
+                <div class="col-md-12">Rating: 3/5</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <hr>
+        <div class="col-md-2"></div>
+        <div class="col-md-6">
+            <form>
+                <div>
+                <label for="reviewText" class="form-group">Write a review</label>
+                <textarea id="reviewText" placeholder="Your review..." rows="5" class="form-control"></textarea>
+                </div>
+                <div>
+                    <label>Your rating</label>
+                    <span class="rating">
+                      <input id="rating5" type="radio" name="rating" value="5">
+                      <label for="rating5">5</label>
+                      <input id="rating4" type="radio" name="rating" value="4">
+                      <label for="rating4">4</label>
+                      <input id="rating3" type="radio" name="rating" value="3">
+                      <label for="rating3">3</label>
+                      <input id="rating2" type="radio" name="rating" value="2">
+                      <label for="rating2">2</label>
+                      <input id="rating1" type="radio" name="rating" value="1">
+                      <label for="rating1">1</label>
+                    </span>
+
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+    <div id="footer"></div>
+</div>
+</body>
+</html>

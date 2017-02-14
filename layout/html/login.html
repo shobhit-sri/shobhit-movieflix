@@ -1,0 +1,52 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="../css/main.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <title>Login</title>
+    </head>
+    <script>
+        $(function(){
+            $("#header").load("header.html");
+            $("#footer").load("footer.html");
+        });
+    </script>
+    <body>
+
+    <div class="container">
+        <div id="header"></div><br><br>
+        <h1 class="col-md-12 well">Sign In</h1>
+        <div class="form-group"><hr></div>
+        <div class="col-md-12 well">
+            <div class="row">
+                <form class="col-md-12">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-md-5 form-group">
+                                <label>Email</label>
+                                <input type="text" placeholder="Enter Email" class="form-control">
+                            </div>
+                            <div class="col-md-5 form-group offset-2">
+                                <label>Password</label>
+                                <input type="password" placeholder="Enter Password" class="form-control">
+                            </div>
+                        </div>
+                        <hr>
+                        <button type="button" class="btn btn-lg btn-success">Sign In</button>
+                        <button type="button" class="btn btn-link offset-5" onclick="window.location.href='register.html'">New User?</button>
+                        <div class="form-group"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="footer"></div>
+    <!--<script type="text/javascript" src="../js/bootstrap.js"></script>-->
+    </body>
+    </html>
