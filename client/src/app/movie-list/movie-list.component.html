@@ -1,0 +1,52 @@
+<div class="row well"><div class="col-md-3">
+    <h2>Movie List</h2>
+</div>
+</div>
+<div class="row well">
+    <div class="col-md-6">
+        <input #searchText class="form-control right-border" type="text" value="" placeholder="Search by type, year, genre, title">
+    </div>
+    <div class="col-md-2">
+        <button type="button" (click)="searchByKeyword(searchText.value)" class="btn btn-primary">Search</button>
+    </div>
+    <div class="col-md-2 col-md-offset-2">
+        <a [routerLink]="['../create']" *ngIf="isAdmin" class="btn btn-primary">Create New Movie</a>
+    </div>
+</div>
+<div class="well">
+    <p-dataTable [tableStyleClass]="'table table-striped table-hover'" [value]="movieList" [rows]="10" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]">
+        <p-column styleClass="'col-button'">
+            <template pTemplate="header">
+                <div class="text-center">
+                    <i class="glyphicon glyphicon-user"></i>
+                </div>
+            </template>
+            <template let-movie="rowData" pTemplate="body">
+                <a [routerLink]="[movie.id]"><img [src]="movie.poster"></a>
+            </template>
+        </p-column>
+        <p-column field="title" [sortable]="true" header="Title"></p-column>
+        <p-column field="year" [sortable]="true" header="Year"></p-column>
+        <p-column field="actors" header="Actors"></p-column>
+        <p-column field="genre" [sortable]="true" header="Genre"></p-column>
+        <p-column field="imdbVotes" [sortable]="true" header="Imdb Vote"></p-column>
+        <p-column field="imdbRating" [sortable]="true" header="Imdb Rating"></p-column>
+        <p-column field="type" [sortable]="true" header="Type"></p-column>
+    </p-dataTable>
+</div>
+
+<div class="row well">
+    <div class="col-md-3">
+        <button type="button" (click)="showMovies()" class="btn btn-primary">Show Movies Only</button>
+    </div>
+    <div class="col-md-3">
+        <button type="button" (click)="showSeries()" class="btn btn-primary">Show Series Only</button>
+    </div>
+    <div class="col-md-3">
+        <button type="button" (click)="showTopMovies()" class="btn btn-primary">Show Top Movies</button>
+    </div>
+    <div class="col-md-3">
+        <button type="button" (click)="showTopSeries()" class="btn btn-primary">Show Top Series</button>
+    </div>
+</div>
+

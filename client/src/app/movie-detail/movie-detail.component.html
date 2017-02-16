@@ -1,0 +1,139 @@
+<a [routerLink]="['../']" class="btn btn-primary">&lt; Back</a>
+<h1 class="col-md-12 well">Movie Details</h1>
+<div class="form-group"><hr></div>
+<br><br><br><br>
+
+<div class="container-fluid">
+    <div class="row well">
+        <div class="col-md-2"><img [src]=movie.poster width="150" height="150" *ngIf="movie.poster"
+                                   class="img-responsive"></div>
+        <div class="col-md-6">
+            <div class="row">
+                <div><h3>{{movie.title}}</h3></div>
+                <div class="row">
+                    <div class="col-md-3"><label for="actors">Actors</label> </div>
+                    <div class="col-md-9" id="actors">{{movie.actors}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"><label for="director">Director</label> </div>
+                    <div class="col-md-9" id="director">{{movie.director}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"><label for="writer">Writer</label> </div>
+                    <div class="col-md-9" id="writer">{{movie.writer}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"><label for="released">Released</label> </div>
+                    <div class="col-md-9" id="released">{{movie.released}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"><label for="year">Year</label> </div>
+                    <div class="col-md-9" id="year">{{movie.year}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"><label for="rated">Rated</label> </div>
+                    <div class="col-md-9" id="rated">{{movie.rated}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"><label for="genre">Genre</label> </div>
+                    <div class="col-md-9" id="genre">{{movie.genre}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"><label for="language">Language</label> </div>
+                    <div class="col-md-9" id="language">{{movie.language}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"><label for="country">Country</label> </div>
+                    <div class="col-md-9" id="country">{{movie.country}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"><label for="award">Awards</label> </div>
+                    <div class="col-md-9" id="award">{{movie.awards}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"><label for="plot">Plot</label> </div>
+                    <div class="col-md-9" id="plot">{{movie.plot}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"><label for="imdbid">Imdb Id</label> </div>
+                    <div class="col-md-9" id="imdbid">{{movie.imdbId}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"><label for="imdbrating">Imdb Rating</label> </div>
+                    <div class="col-md-9" id="imdbrating">{{movie.imdbRating}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"><label for="imdbvotes">Imdb Votes</label> </div>
+                    <div class="col-md-9" id="imdbvotes">{{movie.imdbVotes}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"><label for="metascore">MetaScore</label> </div>
+                    <div class="col-md-9" id="metascore">{{movie.metaScore}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"><label for="type">Type</label> </div>
+                    <div class="col-md-9" id="type">{{movie.type}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"><label for="runtime">Runtime</label> </div>
+                    <div class="col-md-9" id="runtime">{{movie.runtime}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"><label for="userrate">User Rating</label> </div>
+                    <div class="col-md-9" id="userrate">{{avgUserRating}}</div>
+                </div>
+                <div class="row"><br></div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="col-md-6"><button type="button" *ngIf="isAdmin" (click)="deleteMovie()" class="btn btn-danger" id="btnDeleteMovie">Delete</button></div>
+                        <div class="col-md-6"><a  *ngIf="isAdmin" [routerLink]="['../edit',movie.id]" class="btn btn-primary">Edit</a></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <hr>
+    </div>
+    <hr>
+    <div class="row well">
+        <div class="col-md-2"></div>
+        <div class="col-md-6">
+            <div class="row">
+                <div><h3>User Reviews</h3></div>
+                <div *ngIf="!hasReviews"><p>No reviews have been added</p></div>
+                <div class="row" *ngFor="let review of reviews">
+                    <div class="col-md-12"><strong>{{review.user.name}}</strong></div>
+                    <div class="col-md-12 text-justify">
+                        <p>{{review.userComment}}</p>
+                    </div>
+                    <div class="col-md-12">Rating: {{review.userRating}}/5</div>
+                    <br><br><br><br><br>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row well">
+        <hr>
+        <div class="col-md-2"></div>
+        <div class="col-md-6">
+            <form (ngSubmit)="addReview()" novalidate #userReviewForm="ngForm">
+                <div class="form-group">
+                    <label for="reviewText" class="form-group">Write a review</label>
+                    <textarea #inputReview ="ngModel" name="reviewText" [(ngModel)]="newReview.userComment" id="reviewText" required minlength="1" placeholder="Your review..." rows="5" class="form-control"></textarea>
+                    <div *ngIf="inputReview.errors && inputReview.dirty" class="errors">
+                        <p [hidden]="!inputReview.errors.required && !inputReview.errors.minlength">Enter review</p>
+
+                    </div>
+                </div>
+                <div>
+                    <label>Your rating</label>
+                    <p-rating name="reviewRate" [(ngModel)]="newReview.userRating"></p-rating>
+                </div>
+                <div>
+                    <button type="submit" [disabled]="userReviewForm.form.invalid" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
