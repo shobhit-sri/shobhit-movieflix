@@ -1,5 +1,6 @@
 package io.egen.api.service.impl;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,9 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 import io.egen.api.dto.UserReviewDto;
 import io.egen.api.entity.UserReview;
 import io.egen.api.exception.EntityNotFoundException;
+import io.egen.api.mapper.UserMapper;
 import io.egen.api.mapper.UserReviewMapper;
 import io.egen.api.repository.UserReviewRepository;
 import io.egen.api.service.UserReviewService;
+import io.egen.api.service.UserService;
 
 @Service
 public class UserReviewServiceImpl implements UserReviewService {
@@ -21,7 +24,13 @@ public class UserReviewServiceImpl implements UserReviewService {
 	private  UserReviewRepository repository;
 	
 	@Autowired
+	private UserService userService;
+	
+	@Autowired
 	private UserReviewMapper mapper;
+	
+	@Autowired
+	private UserMapper userMapper;
 	
 	@Override
 	@Transactional(readOnly = true)
@@ -60,10 +69,7 @@ public class UserReviewServiceImpl implements UserReviewService {
 	@Override
 	@Transactional
 	public UserReviewDto create(UserReviewDto userReviewDto) {
-		/*UserReview userReview = repository.findOne(userReviewDto.getId());
-		if (userReview != null) {
-			throw new BadRequestException("Already exists");
-		}*/
+		userReviewDto.setUser(userMapper.getEntityFromDto(userService.findByEmail(userReviewDto.getUser().getEmail())));
 		UserReview userReview = mapper.getEntityFromDto(userReviewDto, true);
 		return mapper.getDtoFromEntity(repository.create(userReview));
 	}
@@ -89,10 +95,15 @@ public class UserReviewServiceImpl implements UserReviewService {
 		repository.delete(userReview);
 	}
 	
-	public float getAverageUserRating(String movieId){
+	public String getAverageUserRating(String movieId){
 		List<UserReviewDto> userReviewDtos = findByMovie(movieId);
 		long noOfRates = userReviewDtos.stream().filter(u -> u.getUserRating() != 0).count();
+		if(noOfRates < 1){
+			return "";
+		}
 		float totalUserRating = (float) userReviewDtos.stream().mapToDouble(u -> u.getUserRating()).sum();
-		return totalUserRating/noOfRates;
+		float avgRating = totalUserRating/noOfRates;
+		DecimalFormat df = new DecimalFormat("#.##");
+		return df.format(avgRating);
 	}
 }

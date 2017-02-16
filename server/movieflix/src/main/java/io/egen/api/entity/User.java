@@ -5,11 +5,8 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.Transient;
 
 @Entity
 @NamedQueries({ 
@@ -28,12 +25,7 @@ public class User {
 	
 	private String password;
 	
-	@Transient
-	private String passwordConfirm;
-	
-	@ManyToOne
-	//@JoinColumn(name="ROLE_ID", insertable=false, updatable=false)
-	private Role role;
+	private String role;
 	
 	public User() {
 		this.id = UUID.randomUUID().toString();
@@ -71,11 +63,11 @@ public class User {
 		this.email = email;
 	}
 
-	public Role getRole() {
+	public String getRole() {
 		return role;
 	}
 
-	public void setRole(Role role) {
+	public void setRole(String role) {
 		this.role = role;
 	}
 
@@ -85,14 +77,5 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public String getPasswordConfirm() {
-		return passwordConfirm;
-	}
-
-	public void setPasswordConfirm(String passwordConfirm) {
-		this.passwordConfirm = passwordConfirm;
-	}
-	
+	}	
 }

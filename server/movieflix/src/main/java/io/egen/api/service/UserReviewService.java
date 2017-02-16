@@ -14,7 +14,7 @@ public interface UserReviewService {
 	
 	public List<UserReviewDto> findByMovie(String movieId);
 	
-	public float getAverageUserRating(String movieId);
+	public String getAverageUserRating(String movieId);
 	
 	public UserReviewDto create(UserReviewDto userReviewDto);
 	

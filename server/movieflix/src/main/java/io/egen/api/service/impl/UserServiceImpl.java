@@ -1,5 +1,6 @@
 package io.egen.api.service.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -7,17 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import io.egen.api.dto.RoleDto;
+import io.egen.api.dto.LoginResponse;
 import io.egen.api.dto.UserDto;
+import io.egen.api.dto.UserLogin;
 import io.egen.api.entity.User;
 import io.egen.api.exception.BadRequestException;
 import io.egen.api.exception.EntityNotFoundException;
-import io.egen.api.mapper.RoleMapper;
 import io.egen.api.mapper.UserMapper;
 import io.egen.api.repository.UserRepository;
-import io.egen.api.service.RoleService;
 import io.egen.api.service.UserService;
 import io.egen.api.util.ApplicationConstants;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -26,13 +28,7 @@ public class UserServiceImpl implements UserService {
 	private  UserRepository repository;
 	
 	@Autowired
-	private RoleService roleService;
-	
-	@Autowired
 	private UserMapper mapper;
-	
-	@Autowired
-	private RoleMapper roleMapper;
 	
 	@Override
 	@Transactional(readOnly = true)
@@ -69,12 +65,7 @@ public class UserServiceImpl implements UserService {
 		if (user != null) {
 			throw new BadRequestException("User with this email already exists");
 		}
-		//Set role to USER
-		RoleDto roleDto = roleService.findAll().stream()
-									 .filter(r -> r.getType().equalsIgnoreCase(ApplicationConstants.ROLE_USER))
-									 .findFirst()
-									 .get();
-		userDto.setRole(roleMapper.getEntityFromDto(roleDto));
+		userDto.setRole(ApplicationConstants.ROLE_USER);
 		user = mapper.getEntityFromDto(userDto, true);
 		return mapper.getDtoFromEntity(repository.create(user));
 	}
@@ -98,6 +89,17 @@ public class UserServiceImpl implements UserService {
 			throw new EntityNotFoundException("User not found");
 		}
 		repository.delete(user);
+	}
+	
+	public LoginResponse authenticate(final UserLogin login) {
+		if (login.email == null || repository.findByEmail(login.email) == null 
+								|| !repository.findByEmail(login.email).getPassword().equals(login.password)){ 
+			throw new EntityNotFoundException("Invalid username or password");
+        }
+		String role = repository.findByEmail(login.email).getRole();
+        return new LoginResponse(Jwts.builder().setSubject(login.email)
+            .claim("roles", role).setIssuedAt(new Date())
+            .signWith(SignatureAlgorithm.HS256, ApplicationConstants.SECRET_KEY).compact(), role);
 	}
 
 }

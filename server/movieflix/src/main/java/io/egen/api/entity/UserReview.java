@@ -2,10 +2,10 @@ package io.egen.api.entity;
 
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -23,10 +23,10 @@ public class UserReview {
 	@Id
 	private String id;
 	
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.REMOVE)
 	private User user;
 	
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.REMOVE)
 	private Movie movie;
 	
 	@Max(5)

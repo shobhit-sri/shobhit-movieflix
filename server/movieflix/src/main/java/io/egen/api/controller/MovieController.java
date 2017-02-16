@@ -34,6 +34,21 @@ public class MovieController {
 		return service.findByTitle(title);
 	}
 	
+	@RequestMapping(method = RequestMethod.GET, value = "/type/{type}")
+	public List<MovieDto> findByType(@PathVariable("type") String type){
+		return service.findByType(type);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/top/{type}")
+	public List<MovieDto> findByRating(@PathVariable("type") String type){
+		return service.getTopTitlesByImdbRating(type, 0);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/search/{keyword}")
+	public List<MovieDto> findByKeyword(@PathVariable("keyword") String keyword){
+		return service.findByKeyword(keyword);
+	}
+	
 	@RequestMapping(method = RequestMethod.GET, value = "/imdbId/{imdbId}")
 	public MovieDto findByImdbId(@PathVariable("imdbId") String imdbId){
 		return service.findByImdbId(imdbId);
@@ -50,7 +65,7 @@ public class MovieController {
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE, value = "{id}")
-	public void delete(@PathVariable("id") String id){
-		service.delete(id);
+	public MovieDto delete(@PathVariable("id") String id){
+		return service.delete(id);
 	}
 }

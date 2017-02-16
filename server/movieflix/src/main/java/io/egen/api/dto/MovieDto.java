@@ -26,8 +26,6 @@ public class MovieDto {
 	private String imdbId;
 	private String type;
 	private boolean isActive;
-	private Date deleteDate;
-	private User deletedBy;
 
 	public String getId() {
 		return id;
@@ -154,17 +152,5 @@ public class MovieDto {
 	}
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
-	}
-	public Date getDeleteDate() {
-		return deleteDate;
-	}
-	public void setDeleteDate(Date deleteDate) {
-		this.deleteDate = deleteDate;
-	}
-	public User getDeletedBy() {
-		return deletedBy;
-	}
-	public void setDeletedBy(User deletedBy) {
-		this.deletedBy = deletedBy;
 	}
 }

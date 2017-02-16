@@ -29,12 +29,12 @@ public class UserReviewController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/movie/{movieId}")
-	public UserReviewDto findByMovie(@PathVariable("movieId") String movieId) {
-		return service.findOne(movieId);
+	public List<UserReviewDto> findByMovie(@PathVariable("movieId") String movieId) {
+		return service.findByMovie(movieId);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/rating/{movieId}")
-	public float getAverageUserRating(@PathVariable("movieId") String movieId) {
+	public String getAverageUserRating(@PathVariable("movieId") String movieId) {
 		return service.getAverageUserRating(movieId);
 	}
 	

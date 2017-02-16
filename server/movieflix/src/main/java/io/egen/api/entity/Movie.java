@@ -14,6 +14,8 @@ import javax.persistence.OneToOne;
 @Entity
 @NamedQueries({ 
 	@NamedQuery(name = "Movie.findAll", query = "SELECT m FROM Movie m WHERE m.isActive=true"),
+	@NamedQuery(name = "Movie.findByType", query = "SELECT m FROM Movie m WHERE m.type=:pType AND m.isActive=true"),
+	@NamedQuery(name = "Movie.findByKeyword", query = "SELECT m FROM Movie m WHERE m.type like :pType OR m.title like :pTitle OR m.genre like :pGenre OR m.year like :pYear AND m.isActive=true"),
 	@NamedQuery(name = "Movie.findByTitle", query = "SELECT m FROM Movie m WHERE m.title=:pTitle AND m.isActive=true"),
 	@NamedQuery(name = "Movie.findByImdbId", query = "SELECT m FROM Movie m WHERE m.imdbId=:pImdbId AND m.isActive=true") 
 })
@@ -46,11 +48,6 @@ public class Movie {
 	private String type;
 	@Column(name="IS_ACTIVE", columnDefinition="Boolean default TRUE")
 	private boolean isActive;
-	@Column(name="DELETE_DATE")
-	private Date deleteDate;
-	@OneToOne
-	@JoinColumn(name="DELETE_BY")
-	private User deletedBy;
 	
 	public Movie() {
 		this.id = UUID.randomUUID().toString();
@@ -183,17 +180,5 @@ public class Movie {
 	}
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
-	}
-	public Date getDeleteDate() {
-		return deleteDate;
-	}
-	public void setDeleteDate(Date deleteDate) {
-		this.deleteDate = deleteDate;
-	}
-	public User getDeletedBy() {
-		return deletedBy;
-	}
-	public void setDeletedBy(User deletedBy) {
-		this.deletedBy = deletedBy;
 	}
 }

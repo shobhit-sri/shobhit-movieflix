@@ -11,11 +11,17 @@ public interface MovieService {
 	
 	public MovieDto findByTitle(String title);
 	
+	public List<MovieDto> findByType(String type);
+	
 	public MovieDto findByImdbId(String imdbId);
 	
 	public MovieDto create(MovieDto movieDto);
 	
 	public MovieDto update(String id, MovieDto movieDto);
 	
-	public void delete(String id);
+	public MovieDto delete(String id);
+	
+	public List<MovieDto> getTopTitlesByImdbRating(String type, int topN);
+	
+	public List<MovieDto> findByKeyword(String keyword);
 }

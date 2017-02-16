@@ -1,14 +1,13 @@
 package io.egen.api.dto;
 
-import io.egen.api.entity.Role;
-
 public class UserDto {
 	private String id;
 	private String name;
 	private String address;
-	private Role role;
+	private String role;
 	private String email;
-	
+	private String password;
+		
 	public String getId() {
 		return id;
 	}
@@ -27,10 +26,10 @@ public class UserDto {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public Role getRole() {
+	public String getRole() {
 		return role;
 	}
-	public void setRole(Role role) {
+	public void setRole(String role) {
 		this.role = role;
 	}
 	public String getEmail() {
@@ -38,6 +37,12 @@ public class UserDto {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 }

@@ -53,6 +53,14 @@ public class MovieServiceImpl implements MovieService {
 		}
 		return mapper.getDtoFromEntity(movie);
 	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<MovieDto> findByType(String type){
+		List<Movie> movies = repository.findByType(type);
+		List<MovieDto> movieDtos = movies.stream().map(m -> mapper.getDtoFromEntity(m)).collect(Collectors.toList());
+		return movieDtos;
+	}
 
 	@Override
 	@Transactional(readOnly = true)
@@ -88,30 +96,37 @@ public class MovieServiceImpl implements MovieService {
 
 	@Override
 	@Transactional
-	public void delete(String id) {
+	public MovieDto delete(String id) {
 		Movie movie = repository.findOne(id);
 		if (movie == null) {
 			throw new EntityNotFoundException("Movie not found");
 		}
 		//TODO: Set delete_by to current user after User Story 2 (sign in functionality) is done
-		repository.delete(movie);
+		movie.setActive(false);
+		return mapper.getDtoFromEntity(repository.update(movie));
 	}
 	
-	//TODO: Define endpoint or use with optional param during UI implementation
-	//Get top N movies/tv shows
+	@Override
+	@Transactional(readOnly = true)
 	public List<MovieDto> getTopTitlesByImdbRating(String type, int topN){
 		Comparator<MovieDto> compareByImdbRating = (m1,m2) -> 
-												  m1.getImdbRating() > m2.getImdbRating() ? 1
-												: m1.getImdbRating() < m2.getImdbRating() ? -1
+												  m1.getImdbRating() < m2.getImdbRating() ? 1
+												: m1.getImdbRating() > m2.getImdbRating() ? -1
 												: 0;
 												
-		Stream<MovieDto> movieDtoStream = findAll().stream()
-												   .filter(m -> m.getType().equalsIgnoreCase(type))
-												   .sorted(compareByImdbRating);
+		Stream<MovieDto> movieDtoStream = findByType(type).stream().sorted(compareByImdbRating);
 		
 		List<MovieDto> movieDtos = topN>0 ? movieDtoStream.limit(topN).collect(Collectors.toList())
 										  : movieDtoStream.collect(Collectors.toList());
 		movieDtoStream.close();
+		return movieDtos;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<MovieDto> findByKeyword(String keyword) {
+		List<Movie> movies = repository.findByKeyword(keyword);
+		List<MovieDto> movieDtos = movies.stream().map(m -> mapper.getDtoFromEntity(m)).collect(Collectors.toList());
 		return movieDtos;
 	}
 

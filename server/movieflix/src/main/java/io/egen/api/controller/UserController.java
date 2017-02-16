@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.egen.api.dto.LoginResponse;
 import io.egen.api.dto.UserDto;
+import io.egen.api.dto.UserLogin;
 import io.egen.api.service.UserService;
 
 @RestController
@@ -28,8 +30,13 @@ public class UserController {
 	public UserDto findOne(@PathVariable("id") String userId) {
 		return service.findOne(userId);
 	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "em/{email}")
+	public UserDto findByEmail(@PathVariable("email") String email) {
+		return service.findByEmail(email);
+	}
 
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST, value="create")
 	public UserDto create(@RequestBody UserDto user) {
 		return service.create(user);
 	}
@@ -43,4 +50,11 @@ public class UserController {
 	public void delete(@PathVariable("id") String id) {
 		service.delete(id);
 	}
+	
+	@RequestMapping(method = RequestMethod.POST, value = "login")
+    public LoginResponse login(@RequestBody final UserLogin login) {
+		return service.authenticate(login);
+    }
+
+	
 }

@@ -22,6 +22,23 @@ public class MovieRepositoryImpl implements MovieRepository {
 		TypedQuery<Movie> query = entityManager.createNamedQuery("Movie.findAll", Movie.class);
 		return query.getResultList();
 	}
+	
+	@Override
+	public List<Movie> findByType(String type) {
+		TypedQuery<Movie> query = entityManager.createNamedQuery("Movie.findByType", Movie.class);
+		query.setParameter("pType", type);
+		return query.getResultList();
+	}
+	
+	@Override
+	public List<Movie> findByKeyword(String keyword) {
+		TypedQuery<Movie> query = entityManager.createNamedQuery("Movie.findByKeyword", Movie.class);
+		query.setParameter("pType", "%" + keyword + "%");
+		query.setParameter("pTitle", "%" + keyword + "%");
+		query.setParameter("pGenre", "%" + keyword + "%");
+		query.setParameter("pYear",  "%" + keyword + "%");
+		return query.getResultList();
+	}
 
 	@Override
 	public Movie findOne(String id) {
